@@ -28,7 +28,7 @@ let config: Options
 
 let rootDocument: Document | Element
 export function finder(input: Element, options?: Partial<Options>) {
-  if (input.nodeType !== Node.ELEMENT_NODE) {
+  if (input.nodeType !== window.Node.ELEMENT_NODE) {
     throw new Error(`Can't generate CSS selector for non-element node type.`)
   }
 
@@ -71,7 +71,7 @@ export function finder(input: Element, options?: Partial<Options>) {
 }
 
 function findRootDocument(rootNode: Element | Document, defaults: Options) {
-  if (rootNode.nodeType === Node.DOCUMENT_NODE) {
+  if (rootNode.nodeType === window.Node.DOCUMENT_NODE) {
     return rootNode
   }
   if (rootNode === defaults.root) {
@@ -242,7 +242,7 @@ function index(input: Element): number | null {
 
   let i = 0
   while (child) {
-    if (child.nodeType === Node.ELEMENT_NODE) {
+    if (child.nodeType === window.Node.ELEMENT_NODE) {
       i++
     }
 
