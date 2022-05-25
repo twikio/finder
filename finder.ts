@@ -446,5 +446,17 @@ function cssesc(string: string, opt: Partial<typeof defaultOptions> = {}) {
   if (!isIdentifier && options.wrap) {
     return quote + output + quote;
   }
+
+  //handle unicode
+  const parts = output.match(/\\\w+/g);
+
+  if (parts) {
+    parts.forEach(str => {
+      let code = str.replace("\\", "");
+      code = String.fromCharCode(parseInt(code, 16));
+      output = output.replace(str, code);
+    });
+  }
+
   return output;
 }
