@@ -184,7 +184,16 @@ function penalty(path: Path): number {
 }
 
 function unique(path: Path) {
-  switch (rootDocument.querySelectorAll(selector(path)).length) {
+  let decodedSelector = selector(path);
+  const parts = decodedSelector.match(/\\\w+/g);
+  if(parts){
+    parts.forEach(s=>{
+      let code = s.replace("\\", "")
+      code = String.fromCharCode(parseInt(code, 16))
+      decodedSelector = decodedSelector.replace(s, code)
+    });
+  }
+  switch (rootDocument.querySelectorAll(decodedSelector).length) {
     case 0:
       throw new Error(
         `Can't select any node with this selector: ${selector(path)}`
